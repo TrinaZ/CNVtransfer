@@ -1,0 +1,27 @@
+import pandas as pd
+dq = pd.read_csv(r'E:\untitled\create2\data\TR\CN0CN2CN3_TR.csv').values
+
+df = pd.read_csv(r'E:\untitled\create2\data\TR\CN4+_TR.csv').values
+x_train, y_train = df[:, :-1], df[:, -1]
+x_test, y_test = dq[:, :-1], dq[:, -1]
+# url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data'
+# df = pd.read_csv(url, header = None)
+# df.columns = ['Class label', 'Alcohol', 'Malic acid', 'Ash',
+#               'Alcalinity of ash', 'Magnesium', 'Total phenols',
+#               'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins',
+#               'Color intensity', 'Hue', 'OD280/OD315 of diluted wines', 'Proline']
+import numpy as np
+# np.unique(df['Class label'])
+# df.info()
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+# x, y = df.iloc[:, 1:].values, df.iloc[:, 0].values
+# x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 0)
+# feat_labels = df.columns[1:]
+forest = RandomForestClassifier(n_estimators=10000, random_state=0, n_jobs=-1)
+forest.fit(x_train, y_train)
+importances = forest.feature_importances_
+indices = np.argsort(importances)[::-1]
+print importances
+# for f in range(x_train.shape[1]):
+    # print("%2d) %-*s %f" % (f + 1, 30, feat_labels[indices[f]], importances[indices[f]]))
